@@ -49,7 +49,7 @@
 						@Html.ValidationMessageFor(model => model.ISBN)
 					</div>
 				
-					<button type="button" class="btn btn-success submit">Ask</button>
+					<button type="button" class="btn btn-success submit">Save</button>
 				}
 	
 				<br/><br/>
