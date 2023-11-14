@@ -53,9 +53,6 @@
 				}
 	
 				<br/><br/>
-				<div class="alert alert-warning fade">
-					<strong><span class="alert-content"></span></strong>
-				</div>
 			</div>
 		</div>
 
@@ -84,6 +81,14 @@
 		
 				$('#BookName').change(closeAlert);
 				$('#BookName').keyup(closeAlert);
+			
+				var pages = '@Model.BookNumPages';
+		
+				if(pages && pages == '') 
+					openAlert(pages);
+		
+				$('#BookNumPages').change(closeAlert);
+				$('#BookNumPages').keyup(closeAlert);
 		
 				$('.submit').click(function(){
 					if($('form').valid()) {
@@ -107,4 +112,4 @@
 
 		</script>
 	</body>
-</html>
+
