@@ -32,19 +32,19 @@
 				{
 					<div class="form-group">
 						@Html.LabelFor(m => m.BookName)
-						@Html.TextBoxFor(model => model.BookName, new {@class="form-control"})
+						@Html.TextBoxFor(model => model.BookName, new { @class="form-control" })
 						@Html.ValidationMessageFor(model => model.BookName)
 					</div>
 				
 					<div class="form-group">
 						@Html.LabelFor(m => m.BookNumPages)
-						@Html.TextBoxFor(model => model.BookNumPages, new {@class="form-control"})
+						@Html.TextBoxFor(model => model.BookNumPages, new { @class = "form-control", placeholder = "" })
 						@Html.ValidationMessageFor(model => model.BookNumPages)
 					</div>
 				
 					<div class="form-group">
 						@Html.LabelFor(m => m.ISBN)
-						@Html.TextBoxFor(model => model.ISBN, new {@class="form-control"})
+						@Html.TextBoxFor(model => model.ISBN, new  { @class="form-control" })
 						@Html.ValidationMessageFor(model => model.ISBN)
 					</div>
 				
@@ -60,5 +60,8 @@
 
 <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script src="//ajax.aspnetcdn.com/ajax/mvc/4.0/jquery.validate.unobtrusive.min.js"></script>
+
+<script src="~/Scripts/Book.js"></script>
+
 </body>
 </html>
