@@ -12,6 +12,7 @@ namespace Bookshelf
 		public string BookName { get; set; }
 
 		[Required]
+		[Range(1,9999)]
 		[Display(Name = "Number of pages:")]
 		public int BookNumPages { get; set; }
 		
