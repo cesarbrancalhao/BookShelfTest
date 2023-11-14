@@ -1,0 +1,61 @@
+@model List<Bookshelf.Book>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="Bookshelf" content="width=device-width, initial-scale=1">
+    <title>BookShelf - Book List</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <style type="text/css">
+        .field-validation-error {
+            color: #ff0000;
+        }
+
+        .book-item {
+            margin-bottom: 10px;
+        }
+
+        .btn-group {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Book List</h1>
+
+        @foreach (var book in Model)
+        {
+            <div class="row book-item">
+                <div class="col-md-8">
+                    <strong>@book.BookName</strong> - @book.BookNumPages pages - ISBN: @book.ISBN
+                </div>
+                <div class="col-md-4">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-primary" onclick="editBook('@book.BookName')">Edit</button>
+                        <button type="button" class="btn btn-danger" onclick="deleteBook('@book.BookName')">Delete</button>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="row">
+            <div class="col-md-12">
+                <a class="btn btn-success" href="#" onclick="addNewBook()">New Book</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="~/Scripts/Book.js"></script>
+</body>
+</html>

@@ -15,14 +15,14 @@ namespace Bookshelf
 
 		[HttpPost]
 		public JsonResult GetBook(string BookName, int BookNumPages, string ISBN)
-		{				
+		{
 			//int index = _rnd.Next(_db.Count);
 			//var answer = _db[index];
 			return Json('a');
 		}
 		
 		private static List<string> _listStrings = new List<string>
-		{ 
+		{
 			"Works"
 		};
 	}
