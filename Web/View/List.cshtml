@@ -1,61 +1,114 @@
-@model List<Bookshelf.Book>
-
+@model Bookshelf.Book
 @{
-    Layout = null;
+	Layout = null;
 }
 
 <!DOCTYPE html>
 
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="Bookshelf" content="width=device-width, initial-scale=1">
-    <title>BookShelf - Book List</title>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-    <style type="text/css">
-        .field-validation-error {
-            color: #ff0000;
-        }
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="Bookshelf" content="width=device-width, initial-scale=1">
+		<title>BookShelf</title>
 
-        .book-item {
-            margin-bottom: 10px;
-        }
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+		
+		<style type="text/css">
 
-        .btn-group {
-            margin-right: 5px;
-        }
-    </style>
-</head>
+			.field-validation-error {
+				color: #ff0000;
+			}
 
-<body>
-    <div class="container">
-        <h1>Book List</h1>
+		</style>
+	</head>
+	
+	<body>
+		<div class="container">
+			<div class="col-md-6 col-md-offset-3">
+<button type="button" class="btn btn-primary" id="insertButton">Insert</button>
+<button type="button" class="btn btn-info" id="editButton">Edit</button>
 
-        @foreach (var book in Model)
-        {
-            <div class="row book-item">
-                <div class="col-md-8">
-                    <strong>@book.BookName</strong> - @book.BookNumPages pages - ISBN: @book.ISBN
-                </div>
-                <div class="col-md-4">
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-primary" onclick="editBook('@book.BookName')">Edit</button>
-                        <button type="button" class="btn btn-danger" onclick="deleteBook('@book.BookName')">Delete</button>
-                    </div>
-                </div>
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Book Information</h4>
             </div>
-        }
+            <div class="modal-body">
+                @using (Html.BeginForm("ActionName", "ControllerName", FormMethod.Post, new { id = "bookForm" }))
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.BookName)
+                        @Html.TextBoxFor(model => model.BookName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.BookName)
+                    </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <a class="btn btn-success" href="#" onclick="addNewBook()">New Book</a>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.BookNumPages)
+                        @Html.TextBoxFor(model => model.BookNumPages, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.BookNumPages)
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ISBN)
+                        @Html.TextBoxFor(model => model.ISBN, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ISBN)
+                    </div>
+
+                    <button type="submit" class="btn btn-success">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                }
             </div>
         </div>
     </div>
+</div>
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-    <script src="~/Scripts/Book.js"></script>
-</body>
+
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	
+		<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+		<script src="//ajax.aspnetcdn.com/ajax/mvc/4.0/jquery.validate.unobtrusive.min.js"></script>
+		
+		<script type="text/javascript">
+		
+			$(function () {
+				$('#insertButton').click(function () {
+					$('#bookForm').attr('action', '@Url.RouteUrl(new{ action="InsertBook", controller="Home"})');
+					$('#myModal').modal('show');
+				});
+
+			$('#editButton').click(function () {
+				// You might need to populate the form fields with existing data here
+				$('#bookForm').attr('action', '@Url.Action("EditBook", "ControllerName")');
+				$('#myModal').modal('show');
+			});
+			
+			$('#bookForm').submit(function (e) {
+				e.preventDefault();
+
+				$.ajax({
+					url: $(this).attr('action'),
+					data: $(this).serialize(),
+					type: 'POST',
+					success: function (resp) {
+				
+						$('#myModal').modal('hide');
+						// Additional actions after successful submission
+						},
+						error: function (xhr, status, error) {
+							// Handle error response
+						}
+					});
+				});
+			
+				$('.modal').on('hidden.bs.modal', function () {
+					$(this).find('form')[0].reset();
+				});
+			});
+
+		</script>
+	</body>
 </html>
